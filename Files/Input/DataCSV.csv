@@ -1,0 +1,19 @@
+﻿Your Name;Please input the name of the person that you want to review;Division;Your relationship to the person is (please pick one);How did he/she score on his/her work and projects this month?;How did you score on your work and projects this month?;My feeling about how my leader led me this month (e.g. does he/she give clear directions and KPI, do what he/she says he/she'll do, help you prioritize what's important, keep the team energy positive, etc)?;Please explain or give examples of what he/she did and how he/she can be better;Please explain or give examples of what you did and how you can be better;How is he/she in terms of drive & fit this month?;How you are in terms of drive & fit this month?;Please explain or give examples of what he/she did and how he/she can be;Please explain or give examples of what you did and how you can be;One thing that he/she should START and STOP doing, any tips?;Any feedback that you want to give to the Human Capital (this comment will not be shared with the individual);Any feedback that you want to give the Human Capital?;Date
+HEAD A (Jamal);HEAD A (Jamal);Div A;I am reviewing myself;;2;;;;;3;;;;;nothing;13/02/2020
+staff A (Sherina);staff A (Sherina);Div A;I am reviewing myself;;3;;;;;1;;;;;please help me;14/02/2020
+HEAD C (Jong Yumi);HEAD C (Jong Yumi);Div C;I am reviewing myself;;2;;;;;2;;;;;goodjob!;15/02/2020
+staff C (Ipon);staff C (Ipon);Div C;I am reviewing myself;;1;;;;;2;;;;;everything is fine;16/02/2020
+CEO (joko Anwar);HEAD C (Jong Yumi);Div C;He/She reports to me.;2;;;Good in everything but need to improve in communication;;3;;fine;;start stop;fine;;17/02/2020
+CEO (joko Anwar);HEAD A (Jamal);Div A;He/She reports to me.;1;;;bad;;2;;need improve;;start stop;help him;;18/02/2020
+HEAD A (Jamal);staff A (Sherina);Div A;He/She reports to me.;3;;;good;;3;;good;;nothing;nothing;;19/02/2020
+HEAD C (Jong Yumi);staff C (Ipon);Div C;He/She reports to me.;2;;;fine;;2;;fine;;nothing;nope;;20/02/2020
+Manager A (Iron man);HEAD A (Jamal);Div A;I report to him/her.;;;3;;;2;;a;;nothong;nope;;21/02/2020
+Supervisor A (Nam jo Hyuk);HEAD A (Jamal);Div A;I report to him/her.;;;2;;;3;;-;;-;-;;22/02/2020
+staff C (Ipon);HEAD C (Jong Yumi);Div C;I report to him/her.;;;3;;;3;;-;;-;-;;23/02/2020
+staff A (Sherina);HEAD A (Jamal);Div A;I report to him/her.;;;2;;;1;;-;;-;bad;;24/02/2020
+staff A (Naomi);staff A (Sherina);Div A;Direct team mate;;;;;;2;;good;;good;nothing;;25/02/2020
+staff C (Dini);staff C (Ipon);Div C;Direct team mate;;;;;;1;;bad;;bad;need to improve;;26/02/2020
+VP B (Enola Holmes);HEAD C (Jong Yumi);Div C;Team mate in another team.;;;;;;2;;-;;-;-;;27/02/2020
+VP B (Enola Holmes);HEAD A (Jamal);Div A;Team mate in another team.;;;;;;2;;-;;-;-;;28/02/2020
+HEAD C (Jong Yumi);HEAD A (Jamal);Div A;Team mate in another team.;;;;;;3;;-;;-;-;;29/02/2020
+HEAD A (Jamal);HEAD C (Jong Yumi);Div C;Team mate in another team.;;;;;;2;;-;;-;-;;01/03/2020
