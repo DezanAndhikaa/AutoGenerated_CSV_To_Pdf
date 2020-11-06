@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 class Constants(object):
     # DB Region
     ConnectionString = "postgresql://postgres:AdminPassword123@localhost:5432/reviewDatabase"
-    EnableAutoMigration = False
+    EnableAutoMigration = True
     Base = declarative_base()
     # End of DB Region
 
