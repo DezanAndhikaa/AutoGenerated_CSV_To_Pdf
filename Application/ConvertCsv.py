@@ -11,20 +11,20 @@ from Commons.Model.Constants import Constants
 from random import randint
 
 # Index info from csv
-# 0 = User credential
-# 1 = Who is reviewed by this user
-# 2 = User division
-# 3 = User relationship
-# 4 = Reviewed work score
-# 5 = Self work score
-# 6 = Leader feeling score
-# 7 = Explain work
-# 8 = Self explain work
-# 9 = Drive score
-# 10 = Self drive score
-# 11 = Explain drive
-# 12 = Explain tips (stop & start)
-# 15 = Date
+# 1 = User credential
+# 2 = Who is reviewed by this user
+# 3 = User division
+# 4 = User relationship
+# 5 = Reviewed work score
+# 6 = Self work score
+# 7 = Leader feeling score
+# 8 = Explain work
+# 9 = Self explain work
+# 10 = Drive score
+# 11 = Self drive score
+# 12 = Explain drive
+# 13 = Explain tips (stop & start)
+# 16 = Date
 
 
 def translate_relationship(relation: str):
@@ -71,7 +71,7 @@ class ConvertCsv:
 
     def import_to_db(self, row: str, id_review):
         split_row = row.split(';')
-        cleansing_relationship = split_row[3].replace('.', '')
+        cleansing_relationship = split_row[4].replace('.', '')
 
         if cleansing_relationship == Constants.Relationship[1]:
             self.insert_self_review(split_row, id_review)
@@ -90,46 +90,46 @@ class ConvertCsv:
 
     def insert_user_review(self, split_row, id_review):
         self.insert_review(split_row, id_review)
-        if len(split_row[6].replace(' ', '')) == 0:
-            split_row[6] = 0
+        if len(split_row[7].replace(' ', '')) == 0:
+            split_row[7] = 0
 
-        if len(split_row[4].replace(' ', '')) == 0:
-            split_row[4] = 0
+        if len(split_row[5].replace(' ', '')) == 0:
+            split_row[5] = 0
 
-        if len(split_row[9].replace(' ', '')) == 0:
-            split_row[9] = 0
+        if len(split_row[10].replace(' ', '')) == 0:
+            split_row[10] = 0
 
         user_review = ReviewResult(
             idReview=id_review,
             idReviewResult=randint(0, 1000),
-            answerWorkScore=int(split_row[4]),
-            answerExplainWorkScore=split_row[7],
-            answerDriveScore=int(split_row[9]),
-            answerExplainDriveScore=split_row[11],
-            answerTips=split_row[12],
-            answerLeaderFeeling=int(split_row[6])
+            answerWorkScore=int(split_row[5]),
+            answerExplainWorkScore=split_row[8],
+            answerDriveScore=int(split_row[10]),
+            answerExplainDriveScore=split_row[12],
+            answerTips=split_row[13],
+            answerLeaderFeeling=int(split_row[7])
         )
         self.session.add(user_review)
         self.session.commit()
 
     def insert_user(self, split_row, id_user: int):
-        if len(split_row[0]) > 2:
+        if len(split_row[1]) > 2:
             user = User(
                 idUser=id_user,
-                userDivision=split_row[2],
-                userCredentialName=split_row[0].strip()
+                userDivision=split_row[3],
+                userCredentialName=split_row[1].strip()
             )
             if not self.is_user_exist(user.userCredentialName):
                 self.session.add(user)
                 self.session.commit()
 
     def insert_review(self, split_row, id_review):
-        relation = split_row[3]
+        relation = split_row[4]
         relation.rstrip()
         review = Review(
             idReview=id_review,
-            idUserReviewer=self.get_id_user_by_name(split_row[0].strip()),
-            idUserReviewed=self.get_id_user_by_name(split_row[1].strip()),
+            idUserReviewer=self.get_id_user_by_name(split_row[1].strip()),
+            idUserReviewed=self.get_id_user_by_name(split_row[2].strip()),
             relationship=translate_relationship(relation),
             reviewDate=split_row[16]
         )
@@ -138,18 +138,18 @@ class ConvertCsv:
 
     def insert_self_review(self,split_row, id_review):
         self.insert_review(split_row, id_review)
-        if len(split_row[5].replace(' ', '')) == 0:
-            split_row[5] = 0
-        if len(split_row[10].replace(' ', '')) == 0:
-            split_row[10] = 0
+        if len(split_row[6].replace(' ', '')) == 0:
+            split_row[6] = 0
+        if len(split_row[11].replace(' ', '')) == 0:
+            split_row[11] = 0
 
         self_review = SelfReviewResult(
             idSelfReviewResult=randint(0, 1000),
             idReview=id_review,
-            answerWorkScore=int(split_row[5]),
-            answerExplainWorkScore=split_row[7],
-            answerDriveScore=int(split_row[10]),
-            answerExplainDriveScore=split_row[11]
+            answerWorkScore=int(split_row[6]),
+            answerExplainWorkScore=split_row[9],
+            answerDriveScore=int(split_row[11]),
+            answerExplainDriveScore=split_row[12]
         )
         self.session.add(self_review)
         self.session.commit()
