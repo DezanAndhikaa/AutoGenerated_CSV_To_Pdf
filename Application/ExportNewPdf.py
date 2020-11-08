@@ -22,21 +22,21 @@ class ExportNewPdf:
         self.pdf = canvas.Canvas(Constants.FilePath)
         self.document = []
 
-        users = self.session.query(ReviewQuery).all()
+        users = self.session.query(ReviewQuery).filter(ReviewQuery.ReviewedMembers == "Selvie").all()
         counter = 0
         for user_data in users:
-            self.document = []
             self.add_cover()
             self.add_first_page(user_data.ReviewedMembers)
             self.add_second_page("Desember")
             self.add_third_page()
-            self_review = self.session.query(ReviewQuery).filter(ReviewQuery.ReviewerName == user_data.ReviewedMembers)\
-                .first()
-            if not self_review is None:
+            self_review = self.session.query(ReviewQuery)\
+                .filter(ReviewQuery.ReviewedMembers == user_data.ReviewedMembers,
+                        ReviewQuery.Relationship.like('%reviewing myself%')).first()
+            if self_review is not None:
                 self.add_self_report(self_review)
 
             reviews = self.session.query(ReviewQuery).filter(ReviewQuery.ReviewedMembers == user_data.ReviewedMembers,
-                                                             ReviewQuery.ReviewerName != user_data.ReviewedMembers).all()
+                                                             ReviewQuery.Relationship.notlike('%reviewing myself%')).all()
 
             if not reviews is None:
                 for data_review in reviews:
@@ -45,10 +45,8 @@ class ExportNewPdf:
             SimpleDocTemplate(Constants.FilePath + " " + user_data.ReviewedMembers + ".pdf", pagesize=letter,
                               topMargin=6, bottomMargin=6). \
                 build(self.document)
+            self.document = []
 
-            counter = counter + 1
-            if counter == 10:
-                break
 
     def add_cover(self):
         self.document.append(Image("Files/Images/cover.png", 8 * inch, 10 * inch))
@@ -81,18 +79,20 @@ class ExportNewPdf:
         self.document.append(paragraph)
 
         self.document.append(Spacer(20, 30))
-        work = Paragraph('1. Work: ' + str(self_review.MyProjectScore), ParagraphStyle(name='styleWork',
+        work = Paragraph('1. Work: ' + self_review.MyProjectScore, ParagraphStyle(name='styleWork',
                                                                                         fontSize=16))
-        explain = Paragraph('Explanation: ' + str(self_review.MyExamplesToBeBetter), ParagraphStyle(name='styleWork',
-                                                                                        fontSize=16))
+        explain = Paragraph('Explanation: ' + self_review.MyExamplesToBeBetter, ParagraphStyle(name='styleWork',
+                                                                                               leading=20,
+                                                                                               fontSize=16))
         self.document.append(work)
         self.document.append(Spacer(20, 10))
         self.document.append(explain)
         self.document.append(Spacer(20, 30))
-        drive = Paragraph('2. Drive & Fit: ' + str(self_review.MyDriveFit), ParagraphStyle(name='styleWork',
-                                                                                        fontSize=16))
+        drive = Paragraph('2. Drive & Fit: ' + self_review.MyDriveFit, ParagraphStyle(name='styleWork',
+                                                                                      fontSize=16))
         drive_explain = Paragraph('Explanation: ' + self_review.MyExamplesToBe, ParagraphStyle(name='styleWork',
-                                                                                        fontSize=16))
+                                                                                               leading=20,
+                                                                                               fontSize=16))
         self.document.append(drive)
         self.document.append(Spacer(20, 10))
         self.document.append(drive_explain)
