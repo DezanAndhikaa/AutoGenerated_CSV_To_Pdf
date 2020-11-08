@@ -30,7 +30,7 @@ from random import randint
 def translate_relationship(relation: str):
     keys = list(Constants.Relationship.keys())
     value = list(Constants.Relationship.values())
-    return keys[value.index(relation.replace('.', '').rstrip())]
+    return keys[value.index(relation.replace('.', '').strip())]
 
 
 class ConvertCsv:
@@ -43,7 +43,7 @@ class ConvertCsv:
 
         first_line = True
         first_line_data = True
-        with open(self.path_file, newline='') as csv_file:
+        with open(self.path_file, newline='', errors='ignore') as csv_file:
             spam_reader = csv.reader(csv_file, delimiter=';', quotechar='|')
 
             for row in spam_reader:
@@ -54,7 +54,7 @@ class ConvertCsv:
                 if not first_line:
                     data = '; '.join(row)
                     row_split = data.split(';')
-                    self.insert_user(row_split, randint(0, 1000))
+                    self.insert_user(row_split, randint(0, 99999999))
 
         with open(self.path_file, newline='') as csv_file:
             spam_reader = csv.reader(csv_file, delimiter=';', quotechar='|')

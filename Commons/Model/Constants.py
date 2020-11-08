@@ -20,5 +20,5 @@ class Constants(object):
     # End of Relationship Hash Table
 
     # PDF Report
-    FilePath = "Files/Output/PDF Report"
-    FileTitle = "PDF Report"
+    FilePath = "Files/Output/"
+    FileTitle = "Performance Report"
