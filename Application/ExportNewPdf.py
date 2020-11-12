@@ -22,7 +22,7 @@ class ExportNewPdf:
         self.pdf = canvas.Canvas(Constants.FilePath)
         self.document = []
 
-        users = self.session.query(ReviewQuery).filter(ReviewQuery.ReviewedMembers == "Selvie").all()
+        users = self.session.query(ReviewQuery).all()
         counter = 0
         for user_data in users:
             self.add_cover()
@@ -46,6 +46,10 @@ class ExportNewPdf:
                               topMargin=6, bottomMargin=6). \
                 build(self.document)
             self.document = []
+            counter = counter + 1
+            if counter == 11:
+                break
+
 
 
     def add_cover(self):
@@ -127,7 +131,7 @@ class ExportNewPdf:
         self.document.append(explain)
         self.document.append(Spacer(20, 30))
         drive = Paragraph('2. Drive & Fit: ' + result_review.DriveFit, ParagraphStyle(name='styleWork', leading=25,
-                                                                                      fontSize=16))
+                                                                                       fontSize=16))
         drive_explain = Paragraph('Explanation: ' + result_review.ExamplesToBe,
                                   ParagraphStyle(name='styleWork',
                                                  leading=25,
@@ -148,6 +152,23 @@ class ExportNewPdf:
         answer_additional = Paragraph(result_review.StartAndStop, ParagraphStyle(name='styleWork', leading=25, fontSize=16))
         self.document.append(Spacer(20, 30))
         self.document.append(additional)
-        self.document.append(Spacer(20,10))
+        self.document.append(Spacer(20, 10))
         self.document.append(answer_additional)
+        self.document.append(Spacer(20, 10))
+
+        if "report to him/her" in result_review.Relationship:
+            self.document.append(PageBreak())
+            print("ok")
+            leader_score = Paragraph(
+                '4. My Leader Score: ' + result_review.MyLeaderScore,
+                ParagraphStyle(name='styleWork', fontSize=16))
+            self.document.append(Spacer(20, 30))
+            self.document.append(leader_score)
+            leader_explain = Paragraph('Explanation: ' + result_review.ExamplesToMyLead,
+                                      ParagraphStyle(name='styleWork',
+                                                     leading=25,
+                                                     fontSize=16))
+            self.document.append(Spacer(20, 30))
+            self.document.append(leader_explain)
         self.document.append(PageBreak())
+
